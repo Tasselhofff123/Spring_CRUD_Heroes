@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New hero</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/heroes}" th:object="${hero}">
+    <label for="putName">Введите имя: </label>
+    <input type="text" th:field="*{name}" id="putName"/>
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+    <br/>
+
+
+    <label for="act">Выберите актёра: </label>
+    <select id="act" th:field="*{actor.id}">
+        <option th:each="actor : ${actors}"
+                th:value="${actor.id}"
+                th:text="${actor.name}">
+        </option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('actor')}" th:errors="*{actor}">Actor error</div>
+
+    <label for="isReady">Готовность: </label>
+    <input type="checkbox" id="isReady" th:field="*{ready}" value="*{ready}"/>
+    <div style="color: red" th:if="${#fields.hasErrors('ready')}" th:errors="*{ready}">Ready+ error</div>
+    <br/>
+
+    <label for="scenes">Выберите сцены: </label>
+    <th:block th:each="scene : ${scenes}">
+        <div>
+            <input type="checkbox"  id="scenes"
+                   th:field="*{sceneNumbers}"
+                   th:text="${scene.sceneNumber}" th:value="${scene.id}"/>
+        </div>
+    </th:block>
+    <div style="color: red" th:if="${#fields.hasErrors('sceneNumbers')}" th:errors="*{sceneNumbers}">Scenes error</div>
+
+    <input type="submit" value="Create!"/>
+</form>
+</body>
+</html>

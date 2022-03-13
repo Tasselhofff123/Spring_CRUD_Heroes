@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New equipment</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/equipments}" th:object="${equipment}">
+    <label for="putAudioInterface">Введите аудиокарту: </label>
+    <input type="text" th:field="*{audioInterface}" id="putAudioInterface"/>
+    <div style="color: red" th:if="${#fields.hasErrors('audioInterface')}" th:errors="*{audioInterface}">Name error</div>
+    <br/>
+
+    <label for="putMicrophone">Введите микрофон: </label>
+    <input type="text" th:field="*{microphone}" id="putMicrophone"/>
+    <div style="color: red" th:if="${#fields.hasErrors('microphone')}" th:errors="*{microphone}">Name error</div>
+    <br/>
+
+    <label for="hasPopfilter">pop-filter: </label>
+    <input type="checkbox" id="hasPopfilter" th:field="*{popFilter}" th:value="*{popFilter}"/>
+    <div style="color: red" th:if="${#fields.hasErrors('popFilter')}" th:errors="*{popFilter}">Ready+ error</div>
+    <br/>
+
+    <label for="hasSoundproofing">soundproofing: </label>
+    <input type="checkbox" id="hasSoundproofing" th:field="*{soundproofing}" th:value="*{soundproofing}"/>
+    <div style="color: red" th:if="${#fields.hasErrors('soundproofing')}" th:errors="*{soundproofing}">Ready+ error</div>
+    <br/>
+
+    <input type="submit" value="Create!"/>
+</form>
+</body>
+</html>

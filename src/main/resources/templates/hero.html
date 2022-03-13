@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Герои</title>
+</head>
+<body>
+<p th:text="${hero.getName() + ', ' + hero.getActor.getName()
++ ', ' + hero.getScenes()}">VALUE</p>
+<p th:text="${hero.getId()}">VALUE</p>
+</body>
+</html>

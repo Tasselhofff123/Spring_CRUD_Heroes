@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Всё оборудование</title>
+</head>
+<body>
+<div th:each="equipment : ${equipments}">
+    <a th:href="@{/equipments/{id}(id=${equipment.getId()})}"
+       th:text="${equipment.getAudioInterface()}"></a>
+</div>
+
+<br/>
+<hr/>
+</body>
+</html>
