@@ -55,7 +55,19 @@ public class HeroController {
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model){
         model.addAttribute("hero", heroDAO.show(id));
+        model.addAttribute("scenes", scenesDAO.getScenes());
+        model.addAttribute("actors", actorDAO.returnAllActors());
         return "edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("hero") @Valid Hero hero,
+                          BindingResult bindingResult, @PathVariable("id") int id){
+        if(bindingResult.hasErrors())
+            return "edit";
+        System.out.println("I will update now");
+        heroDAO.update(id, hero);
+        return "redirect:/heroes/index";
     }
 
 }

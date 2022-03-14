@@ -1,7 +1,6 @@
 package com.example.demo.dao;
 
 import com.example.demo.models.Hero;
-import org.aspectj.lang.annotation.SuppressAjWarnings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,4 +34,10 @@ public class HeroDAO {
         entityManager.persist(hero);
     }
 
+    public void update(int id, Hero updatedHero) {
+        Hero hero = show(id);
+        entityManager.detach(hero);
+        hero = updatedHero;
+        entityManager.merge(hero);
+    }
 }
