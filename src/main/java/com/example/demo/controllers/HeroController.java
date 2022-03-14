@@ -10,8 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/heroes")
@@ -52,6 +50,12 @@ public class HeroController {
             return "new";}
         heroDAO.save(hero);
         return "redirect:/heroes/index";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") int id, Model model){
+        model.addAttribute("hero", heroDAO.show(id));
+        return "edit";
     }
 
 }

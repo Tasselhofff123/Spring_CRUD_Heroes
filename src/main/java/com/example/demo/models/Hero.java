@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 
@@ -75,6 +76,22 @@ public class Hero {
 
     public void setReady(boolean ready) {
         this.ready = ready;
+    }
+
+    //Возвращает строку сцен через запятую для отображения на странице
+    public String getScenes(){
+        String parseScenes = "";
+        Iterator iterator = sceneNumbers.iterator();
+        Scenes scene;
+        if (iterator.hasNext()) {
+            scene = (Scenes) iterator.next();
+            parseScenes = parseScenes + scene.getSceneNumber();
+        }
+        while (iterator.hasNext()){
+            scene = (Scenes) iterator.next();
+            parseScenes = parseScenes + ", " + scene.getSceneNumber();
+        }
+        return parseScenes;
     }
 
 }
