@@ -1,6 +1,8 @@
 package com.example.demo.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -13,6 +15,8 @@ public class Hero {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "name")
+    @NotEmpty(message = "Name should not be empty!")
+    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
     private String name;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "actor")
@@ -23,6 +27,7 @@ public class Hero {
             joinColumns = {@JoinColumn(name = "hero_id")},
             inverseJoinColumns = {@JoinColumn(name = "scene_id")}
     )
+    @NotEmpty(message = "Scenes should not be empty")
     private Set<Scenes> sceneNumbers = new HashSet<>();
 
     @Column(name = "ready")

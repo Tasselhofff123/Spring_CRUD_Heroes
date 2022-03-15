@@ -10,6 +10,9 @@
      th:text="${hero.getName()}">user</a>
 </div>
 
+<form th:method="GET" th:action="@{/heroes/new}">
+  <input type="submit" value="Create hero"/>
+</form>
 <br/>
 <hr/>
 </body>

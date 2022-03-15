@@ -40,4 +40,8 @@ public class HeroDAO {
         hero = updatedHero;
         entityManager.merge(hero);
     }
+
+    public void delete(int id) {
+        entityManager.remove(show(id));
+    }
 }

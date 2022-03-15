@@ -45,8 +45,11 @@ public class HeroController {
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("hero") @Valid Hero hero, BindingResult bindingResult){
+    public String create(@ModelAttribute("hero") @Valid Hero hero, BindingResult bindingResult,
+                        Model model){
         if(bindingResult.hasErrors()) {
+            model.addAttribute("hero", hero);
+            model = addScenesAndActors(model);
             return "new";}
         heroDAO.save(hero);
         return "redirect:/heroes/index";
@@ -55,19 +58,33 @@ public class HeroController {
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model){
         model.addAttribute("hero", heroDAO.show(id));
-        model.addAttribute("scenes", scenesDAO.getScenes());
-        model.addAttribute("actors", actorDAO.returnAllActors());
+        model = addScenesAndActors(model);
         return "edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("hero") @Valid Hero hero,
-                          BindingResult bindingResult, @PathVariable("id") int id){
-        if(bindingResult.hasErrors())
+                          BindingResult bindingResult, @PathVariable("id") int id, Model model){
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("hero", hero);
+            model = addScenesAndActors(model);
             return "edit";
+        }
         System.out.println("I will update now");
         heroDAO.update(id, hero);
         return "redirect:/heroes/index";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id){
+        heroDAO.delete(id);
+        return "redirect:/heroes/index";
+    }
+
+    private Model addScenesAndActors(Model model){
+        model.addAttribute("scenes", scenesDAO.getScenes());
+        model.addAttribute("actors", actorDAO.returnAllActors());
+        return model;
     }
 
 }

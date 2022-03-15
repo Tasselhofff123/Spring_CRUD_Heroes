@@ -1,7 +1,6 @@
 package com.example.demo.dao;
 
 import com.example.demo.models.Equipment;
-import com.example.demo.models.Hero;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
