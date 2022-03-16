@@ -14,11 +14,11 @@ public class EquipmentDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public Equipment show(int id) {
+    public Equipment find(int id) {
         return entityManager.find(Equipment.class, id);
     }
 
-    public List<Equipment> index(){
+    public List<Equipment> findAll(){
         return (List<Equipment>) entityManager.createQuery("SELECT equipment from Equipment equipment")
                 .getResultList();
     }

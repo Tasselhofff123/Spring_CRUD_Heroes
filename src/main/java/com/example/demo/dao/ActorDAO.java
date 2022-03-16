@@ -14,12 +14,12 @@ public class ActorDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<Actor> returnAllActors(){
+    public List<Actor> findAll(){
         return (List<Actor>) entityManager.createQuery("SELECT actor from Actor actor")
                 .getResultList();
     }
 
-    public Actor show(int id) {
+    public Actor find(int id) {
         System.out.println(entityManager.find(Actor.class, id));
         return entityManager.find(Actor.class, id);
     }

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+//Конвертер преобразовывает строковое значение id, полученное из
+//web-страницы в объект сцены
 @Component
 public class ScenesConverter implements Converter<String, Scenes>{
     private final ScenesDAO scenesDAO;

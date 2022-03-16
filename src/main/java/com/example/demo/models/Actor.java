@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 import javax.persistence.*;
 
+//Модель актёров
 @Entity
 @Table(name = "actor")
 public class Actor {
@@ -16,6 +17,7 @@ public class Actor {
     @Column(name = "email")
     private String email;
 
+    //У разных актёров может быть один комплект оборудования
     @ManyToOne()
     @JoinColumn(name = "equipment")
     private Equipment equipment;

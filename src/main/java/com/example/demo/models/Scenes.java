@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+//Модель сцены
 @Entity
 @Table(name = "scenes")
 public class Scenes {

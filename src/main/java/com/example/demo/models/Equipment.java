@@ -3,6 +3,7 @@ package com.example.demo.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
+// Модель оборудования актёров
 @Entity
 @Table(name = "equipment")
 public class Equipment {

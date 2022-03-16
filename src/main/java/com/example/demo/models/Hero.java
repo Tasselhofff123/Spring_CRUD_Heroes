@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-
+//Модель героя мультфильма
 @Entity
 @Table(name = "hero")
 public class Hero {
@@ -22,6 +22,8 @@ public class Hero {
     @JoinColumn(name = "actor")
     private Actor actor;
 
+    //У одного героя может быть много сцен,
+    //в то же время в одной сцене может быть несколько героев
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(name = "hero_scenes",
             joinColumns = {@JoinColumn(name = "hero_id")},

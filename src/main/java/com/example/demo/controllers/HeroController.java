@@ -26,22 +26,21 @@ public class HeroController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
-        model.addAttribute("hero", heroDAO.show(id));
-        return "hero";
+        model.addAttribute("hero", heroDAO.find(id));
+        return "heroes/hero";
     }
 
-    @GetMapping("/index")
+    @GetMapping("/all")
     public String index(Model model){
-        model.addAttribute("heroes", heroDAO.index());
-        return "index";
+        model.addAttribute("heroes", heroDAO.findAll());
+        return "heroes/allHeroes";
     }
 
     @GetMapping("/new")
     public String newHero(Model model){
         model.addAttribute("hero", new Hero());
-        model.addAttribute("scenes", scenesDAO.getScenes());
-        model.addAttribute("actors", actorDAO.returnAllActors());
-        return "new";
+        model = addScenesAndActors(model);
+        return "heroes/new";
     }
 
     @PostMapping()
@@ -50,16 +49,16 @@ public class HeroController {
         if(bindingResult.hasErrors()) {
             model.addAttribute("hero", hero);
             model = addScenesAndActors(model);
-            return "new";}
+            return "heroes/new";}
         heroDAO.save(hero);
-        return "redirect:/heroes/index";
+        return "redirect:/heroes/all";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model){
-        model.addAttribute("hero", heroDAO.show(id));
+        model.addAttribute("hero", heroDAO.find(id));
         model = addScenesAndActors(model);
-        return "edit";
+        return "heroes/edit";
     }
 
     @PatchMapping("/{id}")
@@ -68,22 +67,22 @@ public class HeroController {
         if(bindingResult.hasErrors()) {
             model.addAttribute("hero", hero);
             model = addScenesAndActors(model);
-            return "edit";
+            return "heroes/edit";
         }
         System.out.println("I will update now");
         heroDAO.update(id, hero);
-        return "redirect:/heroes/index";
+        return "redirect:/heroes/all";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id){
         heroDAO.delete(id);
-        return "redirect:/heroes/index";
+        return "redirect:/heroes/all";
     }
 
     private Model addScenesAndActors(Model model){
         model.addAttribute("scenes", scenesDAO.getScenes());
-        model.addAttribute("actors", actorDAO.returnAllActors());
+        model.addAttribute("actors", actorDAO.findAll());
         return model;
     }
 

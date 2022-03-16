@@ -22,20 +22,20 @@ public class EquipmentController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
-        model.addAttribute("equipment", equipmentDAO.show(id));
-        return "equipment";
+        model.addAttribute("equipment", equipmentDAO.find(id));
+        return "equipments/equipment";
     }
 
     @GetMapping("/all")
     public String index(Model model){
-        model.addAttribute("equipments", equipmentDAO.index());
-        return "allEquipments";
+        model.addAttribute("equipments", equipmentDAO.findAll());
+        return "equipments/allEquipments";
     }
 
     @GetMapping("/new")
     public String newEquipment(Model model){
         model.addAttribute("equipment", new Equipment());
-        return "newEquipment";
+        return "equipments/newEquipment";
     }
 
     @PostMapping()

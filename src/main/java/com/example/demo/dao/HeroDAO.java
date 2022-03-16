@@ -21,11 +21,11 @@ public class HeroDAO {
     }
 
 
-    public Hero show(int id) {
+    public Hero find(int id) {
         return entityManager.find(Hero.class, id);
     }
 
-    public List<Hero> index(){
+    public List<Hero> findAll(){
         return (List<Hero>) entityManager.createQuery("SELECT hero from Hero hero")
                 .getResultList();
     }
@@ -35,13 +35,13 @@ public class HeroDAO {
     }
 
     public void update(int id, Hero updatedHero) {
-        Hero hero = show(id);
+        Hero hero = find(id);
         entityManager.detach(hero);
         hero = updatedHero;
         entityManager.merge(hero);
     }
 
     public void delete(int id) {
-        entityManager.remove(show(id));
+        entityManager.remove(find(id));
     }
 }
