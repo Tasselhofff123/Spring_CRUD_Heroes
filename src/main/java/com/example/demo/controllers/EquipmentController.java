@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.dao.EquipmentDAO;
+import com.example.demo.services.impl.EquipmentServiceImpl;
 import com.example.demo.models.Equipment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,22 +13,22 @@ import javax.validation.Valid;
 @RequestMapping("/equipments")
 public class EquipmentController {
 
-    private final EquipmentDAO equipmentDAO;
+    private final EquipmentServiceImpl equipmentServiceImpl;
 
-    public EquipmentController(EquipmentDAO equipmentDAO) {
-        this.equipmentDAO = equipmentDAO;
+    public EquipmentController(EquipmentServiceImpl equipmentServiceImpl) {
+        this.equipmentServiceImpl = equipmentServiceImpl;
     }
 
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
-        model.addAttribute("equipment", equipmentDAO.find(id));
+        model.addAttribute("equipment", equipmentServiceImpl.find(id));
         return "equipments/equipment";
     }
 
     @GetMapping("/all")
     public String index(Model model){
-        model.addAttribute("equipments", equipmentDAO.findAll());
+        model.addAttribute("equipments", equipmentServiceImpl.findAll());
         return "equipments/allEquipments";
     }
 
@@ -41,8 +41,8 @@ public class EquipmentController {
     @PostMapping()
     public String createEquipment(@ModelAttribute("equipment") @Valid Equipment equipment,
     BindingResult bindingResult){
-        if (bindingResult.hasErrors()) return "newEquipment";
-        equipmentDAO.save(equipment);
+        if (bindingResult.hasErrors()) return "equipments/newEquipment";
+        equipmentServiceImpl.save(equipment);
         return "redirect:/equipments/all";
     }
 }

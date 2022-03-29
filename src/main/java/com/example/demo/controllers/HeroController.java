@@ -1,8 +1,8 @@
 package com.example.demo.controllers;
 
-import com.example.demo.dao.ActorDAO;
-import com.example.demo.dao.HeroDAO;
-import com.example.demo.dao.ScenesDAO;
+import com.example.demo.services.impl.ActorServiceImpl;
+import com.example.demo.services.impl.HeroServiceImpl;
+import com.example.demo.services.impl.ScenesServiceImpl;
 import com.example.demo.models.Hero;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,25 +14,25 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/heroes")
 public class HeroController {
-    private final HeroDAO heroDAO;
-    private final ActorDAO actorDAO;
-    private final ScenesDAO scenesDAO;
+    private final HeroServiceImpl heroServiceImpl;
+    private final ActorServiceImpl actorServiceImpl;
+    private final ScenesServiceImpl scenesServiceImpl;
 
-    public HeroController(HeroDAO heroDAO, ActorDAO actorDAO, ScenesDAO scenesDAO) {
-        this.heroDAO = heroDAO;
-        this.actorDAO = actorDAO;
-        this.scenesDAO = scenesDAO;
+    public HeroController(HeroServiceImpl heroServiceImpl, ActorServiceImpl actorServiceImpl, ScenesServiceImpl scenesServiceImpl) {
+        this.heroServiceImpl = heroServiceImpl;
+        this.actorServiceImpl = actorServiceImpl;
+        this.scenesServiceImpl = scenesServiceImpl;
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
-        model.addAttribute("hero", heroDAO.find(id));
+        model.addAttribute("hero", heroServiceImpl.find(id));
         return "heroes/hero";
     }
 
     @GetMapping("/all")
     public String index(Model model){
-        model.addAttribute("heroes", heroDAO.findAll());
+        model.addAttribute("heroes", heroServiceImpl.findAll());
         return "heroes/allHeroes";
     }
 
@@ -50,13 +50,13 @@ public class HeroController {
             model.addAttribute("hero", hero);
             model = addScenesAndActors(model);
             return "heroes/new";}
-        heroDAO.save(hero);
+        heroServiceImpl.save(hero);
         return "redirect:/heroes/all";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model){
-        model.addAttribute("hero", heroDAO.find(id));
+        model.addAttribute("hero", heroServiceImpl.find(id));
         model = addScenesAndActors(model);
         return "heroes/edit";
     }
@@ -70,19 +70,19 @@ public class HeroController {
             return "heroes/edit";
         }
         System.out.println("I will update now");
-        heroDAO.update(id, hero);
+        heroServiceImpl.update(hero);
         return "redirect:/heroes/all";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id){
-        heroDAO.delete(id);
+        heroServiceImpl.delete(id);
         return "redirect:/heroes/all";
     }
 
     private Model addScenesAndActors(Model model){
-        model.addAttribute("scenes", scenesDAO.getScenes());
-        model.addAttribute("actors", actorDAO.findAll());
+        model.addAttribute("scenes", scenesServiceImpl.findAll());
+        model.addAttribute("actors", actorServiceImpl.findAll());
         return model;
     }
 
